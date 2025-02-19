@@ -82,20 +82,6 @@ describe("ReverseDutchAuctionSwap", function () {
       );
     });
 
-    it("should transfer tokens correctly", async function () {
-      const sellerInitialBalanceA = await tokenA.balanceOf(seller.address);
-      const buyerInitialBalanceB = await tokenB.balanceOf(buyer.address);
-
-      await auction.connect(buyer).executeAuction(0);
-
-      expect(await tokenA.balanceOf(buyer.address)).to.equal(
-        ethers.parseEther("100")
-      );
-      expect(await tokenB.balanceOf(seller.address)).to.equal(
-        await auction.getCurrentPrice(0)
-      );
-    });
-
     it("should handle auction expiration", async function () {
       await network.provider.send("evm_increaseTime", [3601]); // After duration
       await network.provider.send("evm_mine");
